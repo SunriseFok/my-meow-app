@@ -1,0 +1,35 @@
+name: Simple PWA CI
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  verify-pwa-files:
+    runs-on: ubuntu-latest
+    
+    steps:
+      # 1. 检出（下载）你的仓库代码到虚拟机
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2. 运行一个简单的 Shell 脚本来验证文件
+      - name: Verify core files exist
+        run: |
+          echo "开始检查 PWA 核心文件..."
+          
+          if [ -f "index.html" ]; then
+            echo "✅ index.html 存在！"
+          else
+            echo "❌ 找不到 index.html！"
+            exit 1
+          fi
+          
+          if [ -f "manifest.json" ]; then
+            echo "✅ manifest.json 存在！"
+          else
+            echo "❌ 找不到 manifest.json！"
+            exit 1
+          fi
+          
+          echo "🎉 所有测试通过，工作流运行成功！"
